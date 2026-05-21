@@ -1,3 +1,4 @@
+
 # walmart_project
 # Walmart Data Analysis: End-to-End SQL + Python Project P-9
 
@@ -79,8 +80,45 @@ This project is an end-to-end data analysis solution designed to extract critica
           WHERE rank=1
      ```
      - Sales performance by time, city, and payment method.
+     ```sql
+         SELECT 
+             city,
+             ROUND(SUM(total), 2) AS total_sales
+         FROM walmart
+         GROUP BY city
+         ORDER BY total_sales DESC;
+     ```
+     ```sql
+         SELECT 
+             payment_method,
+             ROUND(SUM(total), 2) AS total_sales
+         FROM walmart_clean_data
+         GROUP BY payment_method
+         ORDER BY total_sales DESC;
+     ```
+     ```sql
+      SELECT 
+          CASE
+              WHEN TIME(time) BETWEEN '00:00:00' AND '11:59:59' THEN 'Morning'
+              WHEN TIME(time) BETWEEN '12:00:00' AND '17:59:59' THEN 'Afternoon'
+              ELSE 'Evening'
+          END AS time_period,
+          
+          ROUND(SUM(total), 2) AS total_sales
+      FROM walmart_clean_data
+      GROUP BY time_period
+      ORDER BY total_sales DESC;
+     ```
      - Analyzing peak sales periods and customer buying patterns.
-     - Profit margin analysis by branch and category.
+     ```sql
+         SELECT 
+             HOUR(time) AS sales_hour,
+             COUNT(*) AS total_transactions,
+             ROUND(SUM(total), 2) AS total_sales
+         FROM walmart_clean_data
+         GROUP BY sales_hour
+         ORDER BY total_sales DESC;
+     ```
    - **Documentation**: Keep clear notes of each query's objective, approach, and results.
 
 ### 10. Project Publishing and Documentation
